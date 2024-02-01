@@ -8,16 +8,17 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
-  node1:
+  rpcnode:
     image: dfsnetwork/dfs-node:latest
     environment:
       NODE_ENV: production
     ports:
       - 8888:8888
+      - 9876:9876
     volumes:
       - ./config:/opt/dfs/config
       - ./data:/opt/dfs/data
-  # node2:
+  # producernode:
   #   image: dfsnetwork/dfs-node:latest
   #   environment:
   #     NODE_ENV: production

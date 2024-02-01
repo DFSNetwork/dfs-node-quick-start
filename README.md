@@ -138,7 +138,7 @@ cleos system regproducer produceraaaa PUB_K1_5KReCfGBEgmMsEjGZmfQRzKCHntrU4kuq7L
 
 Final: setup your bp info. Introduce yourself to the community and publish rpc and p2p endpoint of the nodes
 ```
-cleos push action dfsbpsvoters setbpinfo '{ "producer":"dfsbpdfsbp11", "intro":"DFS Hong Kong", "logo":"https://dfs.land/assets/icons/48x48.png", "location":"Hong Kong", "rpcurl":"https://api.dfs.land", "p2purl":"p2p.dfs.land:9999" }' -p dfsbpdfsbp11
+cleos push action dfsbpsvoters setbpinfo '{ "producer":"dfsbpdfsbp11", "nick":"DFS Hong Kong", "intro":"DFS Hong Kong", "logo":"https://dfs.land/assets/icons/48x48.png", "location":"Hong Kong", "rpcurl":"https://api.dfs.land", "p2purl":"p2p.dfs.land:9999" }' -p dfsbpdfsbp11
 ```
 
 
@@ -146,6 +146,16 @@ After modifying the configuration information and registering the node as a prod
 
 Ask the community to vote for you, and when the ranking reaches the current network standards, you will be rewarded DFS with running node.
 
+## Claim your reward
+
+Keep your node online and claim your DFS rewards.
+
+The reward share depends on the number of nodes online concurrently and the online duration of your node. Rewards can accumulate for up to one day, so please claim them promptly
+
+
+```
+cleos push action dfsbpsvoters claim '["dfsbpdfsbp11"]'  -p dfsbpdfsbp11
+```
 
 # Use docker to run a dfs rpc node
 
@@ -202,6 +212,7 @@ Run the command to check whether it is successful
   "last_irreversible_block_time": "2024-01-09T10:32:05.500"
 }
 ```
+
 
 ## Join discord and get support
 

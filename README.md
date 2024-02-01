@@ -216,4 +216,4 @@ Run the command to check whether it is successful
 
 ## Join discord and get support
 
-https://discord.gg/X58BYngtHZ
+https://discord.com/invite/JydrcH5u9V

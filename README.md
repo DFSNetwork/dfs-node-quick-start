@@ -89,7 +89,7 @@ create a producer key: using for sign block, and resister as a block producer
 
 ```
 // create a wallet if you don't have a wallet, remember save and backup your wallet password
-cleos wallet create --file
+cleos wallet create --file [text]
 
 // create a producer key
 // Make sure that is the producer key used for DFS node block signature only

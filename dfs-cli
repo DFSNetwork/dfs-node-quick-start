@@ -1,2 +1,2 @@
 #!/bin/bash
-docker exec dfs-node-node1-1 cleos "$@"
+docker exec dfs-node-quick-start-rpcnode-1 cleos "$@"

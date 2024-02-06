@@ -16,14 +16,14 @@ services:
       - 8888:8888
       - 9876:9876
     volumes:
-      - ./config:/opt/dfs/config
-      - ./data:/opt/dfs/data
-  # producernode:
-  #   image: dfsnetwork/dfs-node:latest
-  #   environment:
-  #     NODE_ENV: production
-  #   ports:
-  #     - 8001:8888
-  #   volumes:
-  #     - ./config2:/opt/dfs/config
-  #     - ./data2:/opt/dfs/data
+      - ./rpc-node/config:/opt/dfs/config
+      - ./rpc-node/data:/opt/dfs/data
+  producernode:
+    image: dfsnetwork/dfs-node:latest
+    environment:
+      NODE_ENV: production
+    ports:
+      - 8887:8888
+    volumes:
+      - ./producer-node/config:/opt/dfs/config
+      - ./producer-node/data:/opt/dfs/data

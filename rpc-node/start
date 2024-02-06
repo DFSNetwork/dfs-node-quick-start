@@ -1,0 +1,3 @@
+#!/bin/bash
+DFS_DIR=$(pwd)
+nohup nodeos --data-dir=$DFS_DIR/data --config-dir=$DFS_DIR/config --genesis-json=$DFS_DIR/config/genesis.json  >$DFS_DIR/log &

@@ -1,0 +1,56 @@
+#!/bin/bash
+
+log_line=${1:-600}
+
+echo_red() 
+{ 
+  echo -n -e "\033[31;1m$@\033[0m"
+}
+echo_green()
+{ 
+  echo -n -e "\033[32;1m$@\033[0m"
+}
+
+tail -n $log_line ./log | sed -n '/signed by/s/.\+ @ \(.\+\) signed by \([a-z1-5\.]\{1,12\}\) .\+/\1 \2/p' | sort -k 2 -r | uniq -f 1 > /tmp/producers
+cleos get table dfsbpsvoters dfsbpsvoters configs | awk '/minimum_reward_rank/{printf("%s ", $2); getline; print $2}' | sed 's/\,\|\"\|.00000000//g' > /tmp/configs
+cleos get table dfsbpsvoters dfsbpsvoters bpstatus -l 1000 | awk '/bp/{printf("%s ", $2); getline; printf("%s ", $2); getline; print $2}' | sed 's/\,\|\"//g' | sed 's/online/1/g; s/offline/0/g' > /tmp/bpstatus
+cleos get table eosio eosio producers -l 1000 | awk '/owner/{printf("%s ", $2); getline; print $2}' | sed 's/\"\|\,\|\.00000000000000000//g' | sort -k 2 -r -g > /tmp/rank
+cat /tmp/rank | sort -k 1 | awk '{print $2}' > /tmp/votes
+paste /tmp/bpstatus /tmp/votes > /tmp/data
+
+minimum_reward_rank=`cat /tmp/configs | awk '{print $1}'`
+minimum_reward_voters=`cat /tmp/configs | awk '{print $2}'`
+cnt=1
+clear
+echo " nodes=`grep -c "" /tmp/rank`"
+echo " producers=`grep -c "" /tmp/producers`"
+echo " minimum_reward_rank=$minimum_reward_rank"
+echo " minimum_reward_voters=$minimum_reward_voters"
+echo "-------------------------------------------------------"
+echo -e " No\tNode\t\tRPC\tP2P\tReward\tVotes"
+echo "-------------------------------------------------------"
+for node in `cat /tmp/rank | awk '{print $1}'`
+do
+  line=`grep $node /tmp/data`
+  rpc=`echo $line | awk '{print $2}'`
+  p2p=`echo $line | awk '{print $3}'`
+  votes=`echo $line | awk '{print $4}'`
+  votes=$[$votes/100000000]
+  producers=`cat /tmp/producers`
+
+  echo -n -e " $cnt\t"
+  if echo $producers | grep -q "$node"; then echo_green "$node\t"; else echo -n -e "$node\t"; fi
+  if [ "$rpc" = "1" ]; then echo -n -e "$rpc\t"; else echo_red "$rpc\t"; fi
+  if [ "$p2p" = "1" ]; then echo -n -e "$rpc\t"; else echo_red "$rpc\t"; fi
+  if [ "$p2p" = "1" -a "$rpc" = "1" -a $cnt -le $minimum_reward_rank -a $votes -ge $minimum_reward_voters ]; then echo -n -e "1\t"; else echo_red "0\t"; fi
+  if [ $votes -lt $minimum_reward_voters ]; then echo_red "$votes\n"; else echo "$votes"; fi
+  if [ $cnt -eq $minimum_reward_rank ]
+  then
+    echo "-------------------------------------------------------"
+    echo -e " No\tNode\t\tRPC\tP2P\tReward\tVotes"
+    echo "-------------------------------------------------------"
+  fi
+
+  cnt=$[$cnt+1]
+done
+echo "-------------------------------------------------------"

@@ -11,10 +11,11 @@ echo_green()
   echo -n -e "\033[32;1m$@\033[0m"
 }
 
+rpc=`awk '/http-server-address/{print $3}' ./config/config.ini` 
 tail -n $log_line ./log | sed -n '/signed by/s/.\+ @ \(.\+\) signed by \([a-z1-5\.]\{1,12\}\) .\+/\1 \2/p' | sort -k 2 -r | uniq -f 1 > /tmp/producers
-cleos get table dfsbpsvoters dfsbpsvoters configs | awk '/minimum_reward_rank/{printf("%s ", $2); getline; print $2}' | sed 's/\,\|\"\|.00000000//g' > /tmp/configs
-cleos get table dfsbpsvoters dfsbpsvoters bpstatus -l 1000 | awk '/bp/{printf("%s ", $2); getline; printf("%s ", $2); getline; print $2}' | sed 's/\,\|\"//g' | sed 's/online/1/g; s/offline/0/g; s/rpcstatus/0/g; s/p2pstatus/0/g' > /tmp/bpstatus
-cleos get table eosio eosio producers -l 1000 | awk '/owner/{printf("%s ", $2); getline; print $2}' | sed 's/\"\|\,\|\.00000000000000000//g' | sort -k 2 -r -g > /tmp/rank
+cleos -u $rpc get table dfsbpsvoters dfsbpsvoters configs | awk '/minimum_reward_rank/{printf("%s ", $2); getline; print $2}' | sed 's/\,\|\"\|.00000000//g' > /tmp/configs
+cleos -u $rpc get table dfsbpsvoters dfsbpsvoters bpstatus -l 1000 | awk '/bp/{printf("%s ", $2); getline; printf("%s ", $2); getline; print $2}' | sed 's/\,\|\"//g' | sed 's/online/1/g; s/offline/0/g; s/rpcstatus/0/g; s/p2pstatus/0/g' > /tmp/bpstatus
+cleos -u $rpc get table eosio eosio producers -l 1000 | awk '/owner/{printf("%s ", $2); getline; print $2}' | sed 's/\"\|\,\|\.00000000000000000//g' | sort -k 2 -r -g > /tmp/rank
 cat /tmp/rank | sort -k 1 | awk '{print $2}' > /tmp/votes
 paste /tmp/bpstatus /tmp/votes > /tmp/data
 

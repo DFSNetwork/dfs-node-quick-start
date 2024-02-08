@@ -1,0 +1,34 @@
+#!/bin/bash
+
+log_line=${1:-600}
+
+while true
+do
+  tail -n $log_line ./log | sed -n '/signed by/s/.\+ @ \(.\+\) signed by \([a-z1-5\.]\{1,12\}\) .\+/\1 \2/p' | sort -k 2 -r | uniq -f 1 > /tmp/producers
+  account_sort=`cat /tmp/producers | sort -k 2 | awk '{print $2"_"$1}'`
+  account_producing=`cat /tmp/producers | sort -k 1 -r | awk 'NR==1{print $2}'`
+
+  clear
+  echo "-------------------------------"
+  echo "       Time        Producer"
+  echo "-------------------------------"
+  cnt=1
+  space=""
+  for i in $account_sort
+  do
+    if [ $cnt -ge 10 ]; then space=" "; else space="  "; fi
+    account=`echo $i | awk -F_ '{print $1}'`
+    time=`echo $i | awk -FT '{print $2}'`
+    time=`date -d $time-0000 +%T`
+    if [ $account == $account_producing ]
+    then
+      echo -e "\033[32;1m $cnt.$space$time    $account *\033[0m"
+    else
+      echo " $cnt.$space$time    $account"
+    fi
+    cnt=$[$cnt+1]
+  done
+  echo "-------------------------------"
+  sleep 6
+done
+

@@ -17,5 +17,10 @@ package-lock.json*
 *.project
 *.sw?
 
-config/protocol_features
-data/
+log
+
+producer-node/config/protocol_features
+producer-node/data/
+
+rpc-node/config/protocol_features
+rpc-node/data/

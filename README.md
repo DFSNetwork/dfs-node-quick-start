@@ -215,6 +215,86 @@ docker logs -fn 200  dfs-node-quick-start-rpcnode-1
 // producer node logs
 docker logs -fn 200  dfs-node-quick-start-producernode-1
 
+
+# Tools
+
+## producer: See which node is producing
+
+```
+./producer
+
+-------------------------------
+       Time        Producer
+-------------------------------
+ 1.  11:33:05    2vy14dqixpvi
+ 2.  11:33:11    bitcoinzhang
+ 3.  11:33:17    bpdfsnetwork
+ 4.  11:33:23    californiabp
+ 5.  11:33:29    dfgdeveloper
+ 6.  11:33:35    dfs111223344
+ 7.  11:33:41    dfsbpdfsbp11
+ 8.  11:33:47    dfsbtcl2no1x
+ 9.  11:33:53    dfslover1111
+ 10. 11:33:59    dfsnetworkbp *
+ 11. 11:34:05    dfsneverfail
+ 12. 11:34:11    dfssingapore
+ 13. 11:34:17    ethereumbest
+ 14. 11:34:23    greatdfsfarm
+ 15. 11:34:29    hpe4jyjgyjd4
+ 16. 11:34:35    hungarytiger
+ 17. 11:34:41    iamaproducer
+ 18. 11:34:47    imaxiusfirst
+ 19. 11:34:53    poweredbydfs
+ 20. 11:32:41    thlknlna32fu
+ 21. 11:32:53    xiaoming5555
+ 22. 11:32:59    zydntcgyiozo
+-------------------------------
+```
+
+## lsnode: List all nodes status
+```
+./lsnode
+
+ nodes=73
+ producers=22
+
+-------------------------------------------------------
+ No     Node            RPC     P2P     Reward  Votes
+-------------------------------------------------------
+ 1      dfsbpdfsbp11    1       1       1       446307
+ 2      californiabp    1       1       1       199924
+ 3      dfsbtcl2no1x    1       1       1       94260
+ 4      iamaproducer    1       1       1       74039
+ 5      imaxiusfirst    1       1       1       73452
+ 6      dfsnetworkbp    1       1       1       57672
+ 7      thlknlna32fu    1       1       1       57613
+ 8      dfssingapore    1       1       1       45847
+ 9      dfsneverfail    1       1       1       43960
+ 10     dfgdeveloper    1       1       1       31668
+ 11     greatdfsfarm    1       1       1       29437
+ 12     bpdfsnetwork    1       1       1       25724
+ 13     poweredbydfs    1       1       1       24723
+ 14     hpe4jyjgyjd4    1       1       1       24082
+ 15     2vy14dqixpvi    1       1       1       22458
+ 16     dfs111223344    1       1       1       17941
+ 17     woyaofeidegg    0       0       0       17694
+ 18     bitcoinzhang    1       1       1       12315
+ 19     ethereumbest    1       1       1       10432
+ 20     zydntcgyiozo    0       0       0       8646
+ 21     dfslover1111    1       1       1       8081
+ 22     hungarytiger    1       1       1       7074
+ 23     xiaoming5555    1       1       1       5379
+ 24     pumpmydfs55k    1       1       1       4235
+ 25     4kfkhcqgsqwd    0       0       0       1849
+ 26     sunrisedfs11    1       1       1       1753
+ 27     physicslover    1       1       1       1323
+ 28     pinkdfsbp111    1       1       1       1090
+ 29     ptfgxmg12345    1       1       1       1030
+ 30     testusera114    0       0       0       966
+-------------------------------------------------------
+```
+
+
 ## Join discord and get support
 
 https://discord.com/invite/JydrcH5u9V
